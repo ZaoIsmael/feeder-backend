@@ -3,30 +3,25 @@ package domain
 import (
 	"deporvillage-backend/internal/inventory/domain/events"
 	"deporvillage-backend/pkg/domain"
-	"sync"
 )
 
 type Inventory struct {
 	domain.AggregateRoot
-	mu       *sync.Mutex
-	id       InventoryId
+	Id       InventoryId
 	products map[string]Product
 }
 
-func CreateInventory() *Inventory {
-	i := &Inventory{id: InventoryId{`1`}, products: make(map[string]Product)}
+func CreateInventory() Inventory {
+	i := Inventory{Id: InventoryId{"1"}, products: make(map[string]Product)}
 
 	i.AggregateRoot.RegisterEvent(
-		events.InventoryWasCreated{InventoryId: i.id.Value},
+		events.InventoryWasCreated{InventoryId: i.Id.Value},
 	)
 
 	return i
 }
 
 func (i Inventory) AddProduct(sku string) {
-	i.mu.Lock()
-	defer i.mu.Unlock()
-
 	p, err := CreateProduct(sku)
 
 	if err != nil {
