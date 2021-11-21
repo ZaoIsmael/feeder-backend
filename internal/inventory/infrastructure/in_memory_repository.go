@@ -25,12 +25,6 @@ func (r InventoryRepository) Find(id domain.InventoryId) (domain.Inventory, erro
 	return domain.Inventory{}, errors.New("the inventory not exist")
 }
 
-func (r InventoryRepository) Save(is domain.Inventory) {
-	_, ok := r.I[is.Id.Value]
-
-	if ok {
-		return
-	}
-
+func (r *InventoryRepository) Save(is domain.Inventory) {
 	r.I[is.Id.Value] = is
 }
