@@ -18,11 +18,11 @@ func CreateInventory() Inventory {
 	return Inventory{Id: InventoryId{"1"}, Products: make(map[string]Product)}
 }
 
-func (i Inventory) AddProduct(sku string) error {
+func (i *Inventory) AddProduct(sku string) error {
 	p, err := CreateProduct(sku)
 
 	if err != nil {
-		i.AggregateRoot.RegisterEvent(
+		i.RegisterEvent(
 			events.ProductWasInvalid{},
 		)
 
@@ -32,7 +32,7 @@ func (i Inventory) AddProduct(sku string) error {
 	_, ok := i.Products[p.Sku.Value]
 
 	if ok {
-		i.AggregateRoot.RegisterEvent(
+		i.RegisterEvent(
 			events.ProductWasDuplicated{ProductSKU: p.Sku.Value},
 		)
 
@@ -41,7 +41,7 @@ func (i Inventory) AddProduct(sku string) error {
 
 	i.Products[p.Sku.Value] = p
 
-	i.AggregateRoot.RegisterEvent(
+	i.RegisterEvent(
 		events.ProductWasAdded{ProductSKU: p.Sku.Value},
 	)
 
