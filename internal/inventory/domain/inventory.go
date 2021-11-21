@@ -3,16 +3,19 @@ package domain
 import (
 	"deporvillage-backend/internal/inventory/domain/events"
 	"deporvillage-backend/pkg/domain"
+	"errors"
 )
 
 type Inventory struct {
 	domain.AggregateRoot
 	Id       InventoryId
-	products map[string]Product
+	Products map[string]Product
 }
 
+var ProductDuplicatedError = errors.New("the product with SKU is registered")
+
 func CreateInventory() Inventory {
-	i := Inventory{Id: InventoryId{"1"}, products: make(map[string]Product)}
+	i := Inventory{Id: InventoryId{"1"}, Products: make(map[string]Product)}
 
 	i.AggregateRoot.RegisterEvent(
 		events.InventoryWasCreated{InventoryId: i.Id.Value},
@@ -21,7 +24,7 @@ func CreateInventory() Inventory {
 	return i
 }
 
-func (i Inventory) AddProduct(sku string) {
+func (i Inventory) AddProduct(sku string) error {
 	p, err := CreateProduct(sku)
 
 	if err != nil {
@@ -29,22 +32,24 @@ func (i Inventory) AddProduct(sku string) {
 			events.ProductWasInvalid{},
 		)
 
-		return
+		return err
 	}
 
-	_, ok := i.products[p.sku.value]
+	_, ok := i.Products[p.Sku.Value]
 
 	if ok {
 		i.AggregateRoot.RegisterEvent(
-			events.ProductWasDuplicated{ProductSKU: p.sku.value},
+			events.ProductWasDuplicated{ProductSKU: p.Sku.Value},
 		)
 
-		return
+		return ProductDuplicatedError
 	}
 
-	i.products[p.sku.value] = p
+	i.Products[p.Sku.Value] = p
 
 	i.AggregateRoot.RegisterEvent(
-		events.ProductWasAdded{ProductSKU: p.sku.value},
+		events.ProductWasAdded{ProductSKU: p.Sku.Value},
 	)
+
+	return nil
 }

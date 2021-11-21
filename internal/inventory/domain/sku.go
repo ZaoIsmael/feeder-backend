@@ -6,8 +6,10 @@ import (
 )
 
 type SKU struct {
-	value string
+	Value string
 }
+
+var SkuInvalidError = errors.New("the product SKU is invalid")
 
 func CreateSKU(value string) (SKU, error) {
 	err := validate(value)
@@ -24,5 +26,5 @@ func validate(v string) error {
 		return nil
 	}
 
-	return errors.New("the product SKU is invalid")
+	return SkuInvalidError
 }

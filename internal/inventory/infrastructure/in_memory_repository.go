@@ -3,27 +3,20 @@ package infrastructure
 import (
 	"deporvillage-backend/internal/inventory/domain"
 	"errors"
-	"strconv"
 )
 
-type inventoryRepository struct {
-	i map[int]domain.Inventory
+type InventoryRepository struct {
+	i map[string]domain.Inventory
 }
 
-func NewInventoryRepository() inventoryRepository {
-	return inventoryRepository{
-		i: make(map[int]domain.Inventory),
+func NewInventoryRepository(i map[string]domain.Inventory) InventoryRepository {
+	return InventoryRepository{
+		i: i,
 	}
 }
 
-func (r inventoryRepository) Find(id domain.InventoryId) (domain.Inventory, error) {
-	idd, err := strconv.Atoi(id.Value)
-
-	if err != nil {
-		return domain.Inventory{}, err
-	}
-
-	i, ok := r.i[idd]
+func (r InventoryRepository) Find(id domain.InventoryId) (domain.Inventory, error) {
+	i, ok := r.i[id.Value]
 
 	if ok {
 		return i, nil
@@ -32,18 +25,12 @@ func (r inventoryRepository) Find(id domain.InventoryId) (domain.Inventory, erro
 	return domain.Inventory{}, errors.New("the inventory not exist")
 }
 
-func (r inventoryRepository) Save(i domain.Inventory) {
-	idd, err := strconv.Atoi(i.Id.Value)
-
-	if err != nil {
-		return
-	}
-
-	i, ok := r.i[idd]
+func (r InventoryRepository) Save(i domain.Inventory) {
+	i, ok := r.i[i.Id.Value]
 
 	if ok {
 		return
 	}
 
-	r.i[idd] = i
+	r.i[i.Id.Value] = i
 }

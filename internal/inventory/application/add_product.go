@@ -12,16 +12,17 @@ func CreateAddProductApplicationService(repository domain.InventoryRepository, b
 	return AddProductApplicationService{repository, bus}
 }
 
-func (as AddProductApplicationService) execute(sku string) {
+func (as AddProductApplicationService) execute(sku string) error {
 	inventory, err := as.repository.Find(domain.InventoryId{Value: "1"})
 
 	if err != nil {
 		inventory = domain.CreateInventory()
 	}
 
-	inventory.AddProduct(sku)
+	de := inventory.AddProduct(sku)
 
 	as.repository.Save(inventory)
-
 	as.bus.Publish(inventory.Pull())
+
+	return de
 }

@@ -1,7 +1,7 @@
 package domain
 
 type Product struct {
-	sku SKU
+	Sku SKU
 }
 
 func CreateProduct(sku string) (Product, error) {
