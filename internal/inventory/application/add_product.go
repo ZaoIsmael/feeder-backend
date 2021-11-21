@@ -12,7 +12,7 @@ func CreateAddProductApplicationService(repository domain.InventoryRepository, b
 	return AddProductApplicationService{repository, bus}
 }
 
-func (as AddProductApplicationService) execute(sku string) error {
+func (as AddProductApplicationService) Execute(sku string) error {
 	inventory, err := as.repository.Find(domain.InventoryId{Value: "1"})
 
 	if err != nil {

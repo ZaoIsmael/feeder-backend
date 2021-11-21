@@ -10,7 +10,7 @@ import (
 
 func setupTest(im map[string]domain.Inventory) AddProductApplicationService {
 	repository := infrastructure.NewInventoryRepository(im)
-	return CreateAddProductApplicationService(repository, pkg.InMemoryEventBus{})
+	return CreateAddProductApplicationService(&repository, pkg.InMemoryEventBus{})
 }
 
 func TestAddProduct(t *testing.T) {
@@ -18,7 +18,7 @@ func TestAddProduct(t *testing.T) {
 	im := make(map[string]domain.Inventory)
 	as := setupTest(im)
 
-	err := as.execute("LPOS-3241")
+	err := as.Execute("LPOS-3241")
 
 	if err != nil {
 		t.Errorf("error when running application servirce")
@@ -30,7 +30,7 @@ func TestAddProductWithSkuInvalid(t *testing.T) {
 	im := make(map[string]domain.Inventory)
 	as := setupTest(im)
 
-	err := as.execute("LPOS-32411")
+	err := as.Execute("LPOS-32411")
 
 	if !errors.Is(err, domain.SkuInvalidError) {
 		t.Errorf("error when running application servirce")
@@ -52,7 +52,7 @@ func TestAddProductDuplicated(t *testing.T) {
 	im[id.Value] = i
 
 	as := setupTest(im)
-	err := as.execute(sku)
+	err := as.Execute(sku)
 
 	if !errors.Is(err, domain.ProductDuplicatedError) {
 		t.Errorf("error when running application servirce")
