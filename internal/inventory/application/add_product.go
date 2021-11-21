@@ -13,7 +13,7 @@ func CreateAddProductApplicationService(repository domain.InventoryRepository, b
 }
 
 func (as AddProductApplicationService) execute(sku string) {
-	inventory, err := as.repository.Find(domain.InventoryId{Value: `1`})
+	inventory, err := as.repository.Find(domain.InventoryId{Value: "1"})
 
 	if err != nil {
 		inventory = domain.CreateInventory()
