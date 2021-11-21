@@ -26,11 +26,11 @@ func (r ReportRepository) Find(id domain.ReportId) (domain.Report, error) {
 }
 
 func (r ReportRepository) Save(re domain.Report) {
-	i, ok := r.r[re.Id.Value]
+	_, ok := r.r[re.Id.Value]
 
 	if ok {
 		return
 	}
 
-	r.r[re.Id.Value] = i
+	r.r[re.Id.Value] = re
 }
