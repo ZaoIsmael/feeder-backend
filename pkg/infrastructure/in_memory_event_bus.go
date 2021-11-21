@@ -1,13 +1,15 @@
 package infrastructure
 
-import "deporvillage-feeder-backend/pkg/domain"
+import (
+	"deporvillage-feeder-backend/pkg/domain"
+)
 
 type InMemoryEventBus struct {
-	handlers []domain.EventHandler
+	Handlers []domain.EventHandler
 }
 
 func (im InMemoryEventBus) AddHandlers(eh []domain.EventHandler) {
-	im.handlers = append(im.handlers, eh...)
+	im.Handlers = append(im.Handlers, eh...)
 }
 
 func (im InMemoryEventBus) Publish(de []domain.EventDomain) {
@@ -17,7 +19,7 @@ func (im InMemoryEventBus) Publish(de []domain.EventDomain) {
 }
 
 func (im InMemoryEventBus) publish(de domain.EventDomain) {
-	for _, h := range im.handlers {
+	for _, h := range im.Handlers {
 		if h.EventSubscriberName() == de.EventName() {
 			h.Execute(de)
 		}
