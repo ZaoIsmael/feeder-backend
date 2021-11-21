@@ -19,7 +19,7 @@ func (as ProductWasInvalidApplicationService) EventSubscriberName() string {
 }
 
 func (as ProductWasInvalidApplicationService) Execute(e pkg.EventDomain) {
-	report, err := as.repository.Find(1)
+	report, err := as.repository.Find(domain.ReportId{Value: "1"})
 
 	if err != nil {
 		report = domain.CreateReport()
