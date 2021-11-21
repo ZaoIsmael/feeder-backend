@@ -7,21 +7,21 @@ import (
 	"testing"
 )
 
-func setupProductWasAdded(rm map[string]domain.Report) (ProductWasAddedApplicationService, infrastructure.ReportRepository) {
+func setupProductWasInvalid(rm map[string]domain.Report) (ProductWasInvalidApplicationService, infrastructure.ReportRepository) {
 	repository := infrastructure.NewReportRepository(rm)
-	return CreateProductWasAddedApplicationService(repository), repository
+	return CreateProductWasInvalidApplicationService(repository), repository
 }
 
-func TestProductWasAdded(t *testing.T) {
+func TestProductWasInvalid(t *testing.T) {
 	// arrange
 	rm := make(map[string]domain.Report)
-	as, r := setupProductWasAdded(rm)
+	as, r := setupProductWasInvalid(rm)
 
-	as.Execute(events.ProductWasAdded{ProductSKU: "ABCD-1234"})
+	as.Execute(events.ProductWasInvalid{})
 
 	re, _ := r.Find(domain.ReportId{Value: "1"})
 
-	if re.CountProducts != 1 {
+	if re.CountProductsInvalid != 1 {
 		t.Errorf("error when running application servirce")
 	}
 }

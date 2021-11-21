@@ -6,12 +6,12 @@ type Report struct {
 	domain.AggregateRoot
 	Id                      ReportId
 	CountProducts           int
-	countProductsInvalid    int
-	countProductsDuplicated int
+	CountProductsInvalid    int
+	CountProductsDuplicated int
 }
 
 func CreateReport() Report {
-	return Report{Id: ReportId{"1"}, CountProducts: 0, countProductsInvalid: 0, countProductsDuplicated: 0}
+	return Report{Id: ReportId{"1"}, CountProducts: 0, CountProductsInvalid: 0, CountProductsDuplicated: 0}
 }
 
 func (r *Report) IncrementProduct() {
@@ -19,9 +19,9 @@ func (r *Report) IncrementProduct() {
 }
 
 func (r *Report) IncrementProductInvalid() {
-	r.countProductsInvalid++
+	r.CountProductsInvalid++
 }
 
 func (r *Report) IncrementProductDuplicated() {
-	r.countProductsDuplicated++
+	r.CountProductsDuplicated++
 }
