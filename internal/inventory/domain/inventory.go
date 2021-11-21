@@ -15,7 +15,6 @@ type Inventory struct {
 
 func CreateInventory() *Inventory {
 	i := &Inventory{id: InventoryId{`1`}, products: make(map[string]Product)}
-	// Register domain event
 
 	i.AggregateRoot.RegisterEvent(
 		events.InventoryWasCreated{InventoryId: i.id.Value},
@@ -31,7 +30,6 @@ func (i Inventory) AddProduct(sku string) {
 	p, err := CreateProduct(sku)
 
 	if err != nil {
-		// Register domain event of invalid product
 		i.AggregateRoot.RegisterEvent(
 			events.ProductWasInvalid{},
 		)
@@ -42,7 +40,6 @@ func (i Inventory) AddProduct(sku string) {
 	_, ok := i.products[p.sku.value]
 
 	if ok {
-		// Register domain event of to exist product
 		i.AggregateRoot.RegisterEvent(
 			events.ProductWasDuplicated{ProductSKU: p.sku.value},
 		)
@@ -51,7 +48,7 @@ func (i Inventory) AddProduct(sku string) {
 	}
 
 	i.products[p.sku.value] = p
-	// Register domain event of the add product
+
 	i.AggregateRoot.RegisterEvent(
 		events.ProductWasAdded{ProductSKU: p.sku.value},
 	)
