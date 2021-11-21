@@ -18,7 +18,7 @@ func (as ProductWasAddedApplicationService) EventSubscriberName() string {
 	return events.ProductWasAddedName()
 }
 
-func (as ProductWasAddedApplicationService) Execute(e pkg.EventDomain) {
+func (as ProductWasAddedApplicationService) Execute(_ pkg.EventDomain) {
 	report, err := as.repository.Find(domain.ReportId{Value: "1"})
 
 	if err != nil {
