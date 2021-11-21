@@ -9,7 +9,7 @@ import (
 
 func setupProductWasDuplicated(rm map[string]domain.Report) (ProductWasDuplicatedApplicationService, infrastructure.ReportRepository) {
 	repository := infrastructure.NewReportRepository(rm)
-	return CreateProductWasDuplicatedApplicationService(repository), repository
+	return CreateProductWasDuplicatedApplicationService(&repository), repository
 }
 
 func TestProductWasDuplicated(t *testing.T) {
@@ -22,6 +22,6 @@ func TestProductWasDuplicated(t *testing.T) {
 	re, _ := r.Find(domain.ReportId{Value: "1"})
 
 	if re.CountProductsDuplicated != 1 {
-		t.Errorf("error when running application servirce")
+		t.Errorf("error when running application service")
 	}
 }

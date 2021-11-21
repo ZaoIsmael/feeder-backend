@@ -9,7 +9,7 @@ import (
 
 func setupProductWasInvalid(rm map[string]domain.Report) (ProductWasInvalidApplicationService, infrastructure.ReportRepository) {
 	repository := infrastructure.NewReportRepository(rm)
-	return CreateProductWasInvalidApplicationService(repository), repository
+	return CreateProductWasInvalidApplicationService(&repository), repository
 }
 
 func TestProductWasInvalid(t *testing.T) {
@@ -22,6 +22,6 @@ func TestProductWasInvalid(t *testing.T) {
 	re, _ := r.Find(domain.ReportId{Value: "1"})
 
 	if re.CountProductsInvalid != 1 {
-		t.Errorf("error when running application servirce")
+		t.Errorf("error when running application service")
 	}
 }
