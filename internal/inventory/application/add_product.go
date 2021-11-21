@@ -1,6 +1,8 @@
 package application
 
-import "deporvillage-feeder-backend/internal/inventory/domain"
+import (
+	"deporvillage-feeder-backend/internal/inventory/domain"
+)
 import pkg "deporvillage-feeder-backend/pkg/domain"
 
 type AddProductApplicationService struct {
@@ -21,8 +23,8 @@ func (as AddProductApplicationService) Execute(sku string) error {
 
 	de := inventory.AddProduct(sku)
 
-	as.repository.Save(inventory)
 	as.bus.Publish(inventory.Pull())
+	as.repository.Save(inventory)
 
 	return de
 }

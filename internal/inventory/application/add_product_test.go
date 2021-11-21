@@ -33,7 +33,7 @@ func TestAddProductWithSkuInvalid(t *testing.T) {
 	err := as.Execute("LPOS-32411")
 
 	if !errors.Is(err, domain.SkuInvalidError) {
-		t.Errorf("error when running application servirce")
+		t.Errorf("error when running application service")
 	}
 }
 
@@ -55,6 +55,6 @@ func TestAddProductDuplicated(t *testing.T) {
 	err := as.Execute(sku)
 
 	if !errors.Is(err, domain.ProductDuplicatedError) {
-		t.Errorf("error when running application servirce")
+		t.Errorf("error when running application service")
 	}
 }
