@@ -1,7 +1,7 @@
 package application
 
-import "deporvillage-backend/internal/inventory/domain"
-import pkg "deporvillage-backend/pkg/domain"
+import "deporvillage-feeder-backend/internal/inventory/domain"
+import pkg "deporvillage-feeder-backend/pkg/domain"
 
 type AddProductApplicationService struct {
 	repository domain.InventoryRepository

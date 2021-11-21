@@ -1,9 +1,9 @@
 package event_handlers
 
 import (
-	"deporvillage-backend/internal/inventory/domain/events"
-	"deporvillage-backend/internal/report/domain"
-	pkg "deporvillage-backend/pkg/domain"
+	"deporvillage-feeder-backend/internal/inventory/domain/events"
+	"deporvillage-feeder-backend/internal/report/domain"
+	pkg "deporvillage-feeder-backend/pkg/domain"
 )
 
 type ProductWasInvalidApplicationService struct {

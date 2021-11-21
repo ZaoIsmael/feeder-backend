@@ -1,6 +1,6 @@
 package domain
 
-import "deporvillage-backend/pkg/domain"
+import "deporvillage-feeder-backend/pkg/domain"
 
 type Report struct {
 	domain.AggregateRoot

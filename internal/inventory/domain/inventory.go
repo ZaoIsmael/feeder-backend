@@ -1,8 +1,8 @@
 package domain
 
 import (
-	"deporvillage-backend/internal/inventory/domain/events"
-	"deporvillage-backend/pkg/domain"
+	"deporvillage-feeder-backend/internal/inventory/domain/events"
+	"deporvillage-feeder-backend/pkg/domain"
 	"errors"
 )
 

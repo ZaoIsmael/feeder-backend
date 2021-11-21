@@ -1,7 +1,7 @@
 package infrastructure
 
 import (
-	"deporvillage-backend/internal/inventory/domain"
+	"deporvillage-feeder-backend/internal/inventory/domain"
 	"errors"
 )
 

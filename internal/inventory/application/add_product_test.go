@@ -1,9 +1,9 @@
 package application
 
 import (
-	"deporvillage-backend/internal/inventory/domain"
-	"deporvillage-backend/internal/inventory/infrastructure"
-	pkg "deporvillage-backend/pkg/infrastructure"
+	"deporvillage-feeder-backend/internal/inventory/domain"
+	"deporvillage-feeder-backend/internal/inventory/infrastructure"
+	pkg "deporvillage-feeder-backend/pkg/infrastructure"
 	"errors"
 	"testing"
 )

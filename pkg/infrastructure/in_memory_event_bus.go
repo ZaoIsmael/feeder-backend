@@ -1,6 +1,6 @@
 package infrastructure
 
-import "deporvillage-backend/pkg/domain"
+import "deporvillage-feeder-backend/pkg/domain"
 
 type InMemoryEventBus struct {
 	handlers []domain.EventHandler
