@@ -15,13 +15,7 @@ type Inventory struct {
 var ProductDuplicatedError = errors.New("the product with SKU is registered")
 
 func CreateInventory() Inventory {
-	i := Inventory{Id: InventoryId{"1"}, Products: make(map[string]Product)}
-
-	i.AggregateRoot.RegisterEvent(
-		events.InventoryWasCreated{InventoryId: i.Id.Value},
-	)
-
-	return i
+	return Inventory{Id: InventoryId{"1"}, Products: make(map[string]Product)}
 }
 
 func (i Inventory) AddProduct(sku string) error {
