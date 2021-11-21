@@ -9,5 +9,5 @@ func (ed ProductWasAdded) EventName() string {
 }
 
 func ProductWasAddedName() string  {
-	return `product_was_added`
+	return "product_was_added"
 }
