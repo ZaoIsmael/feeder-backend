@@ -6,17 +6,17 @@ import (
 )
 
 type InventoryRepository struct {
-	I map[string]domain.Inventory
+	i map[string]domain.Inventory
 }
 
-func NewInventoryRepository(i map[string]domain.Inventory) InventoryRepository {
-	return InventoryRepository{
-		I: i,
+func NewInventoryRepository(i map[string]domain.Inventory) *InventoryRepository {
+	return &InventoryRepository{
+		i: i,
 	}
 }
 
 func (r InventoryRepository) Find(id domain.InventoryId) (domain.Inventory, error) {
-	i, ok := r.I[id.Value]
+	i, ok := r.i[id.Value]
 
 	if ok {
 		return i, nil
@@ -26,5 +26,5 @@ func (r InventoryRepository) Find(id domain.InventoryId) (domain.Inventory, erro
 }
 
 func (r *InventoryRepository) Save(is domain.Inventory) {
-	r.I[is.Id.Value] = is
+	r.i[is.Id.Value] = is
 }

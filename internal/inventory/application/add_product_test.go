@@ -3,6 +3,7 @@ package application
 import (
 	"deporvillage-feeder-backend/internal/inventory/domain"
 	"deporvillage-feeder-backend/internal/inventory/infrastructure"
+	domain2 "deporvillage-feeder-backend/pkg/domain"
 	pkg "deporvillage-feeder-backend/pkg/infrastructure"
 	"errors"
 	"testing"
@@ -10,7 +11,7 @@ import (
 
 func setupTest(im map[string]domain.Inventory) AddProductApplicationService {
 	repository := infrastructure.NewInventoryRepository(im)
-	return CreateAddProductApplicationService(&repository, pkg.InMemoryEventBus{})
+	return CreateAddProductApplicationService(repository, pkg.InMemoryEventBus{})
 }
 
 func TestAddProduct(t *testing.T) {
@@ -32,7 +33,7 @@ func TestAddProductWithSkuInvalid(t *testing.T) {
 
 	err := as.Execute("LPOS-32411")
 
-	if !errors.Is(err, domain.SkuInvalidError) {
+	if !errors.Is(err, domain2.SkuInvalidError) {
 		t.Errorf("error when running application service")
 	}
 }
@@ -45,7 +46,7 @@ func TestAddProductDuplicated(t *testing.T) {
 	i := domain.Inventory{
 		Id: id,
 		Products: map[string]domain.Product{
-			sku: {Sku: domain.SKU{Value: sku}},
+			sku: {Sku: domain2.SKU{Value: sku}},
 		},
 	}
 
