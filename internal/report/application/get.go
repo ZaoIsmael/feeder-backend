@@ -9,7 +9,7 @@ type GetApplicationService struct {
 }
 
 type Response struct {
-	Uniques     int
+	Uniques    int
 	Duplicated int
 	Invalids   int
 }

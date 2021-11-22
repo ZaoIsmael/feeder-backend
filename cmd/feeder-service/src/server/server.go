@@ -5,6 +5,7 @@ import (
 	"deporvillage-feeder-backend/cmd/feeder-service/src/controller"
 	"deporvillage-feeder-backend/cmd/feeder-service/src/util"
 	"fmt"
+	"log"
 	"math/rand"
 	"net"
 	"os"
@@ -14,51 +15,46 @@ import (
 	"time"
 )
 
-type server struct {
+type Server struct {
 	listener              net.Listener
 	handler               controller.Controller
 	totalConnectedClients int
 }
 
-type Server interface {
-	Run()
-	Shutdown()
-}
-
 var limitConnectedClients = 5
 
-func CreateServer(h controller.Controller) (server, error) {
+func CreateServer(h controller.Controller) (Server, error) {
 	l, err := net.ListenTCP("tcp4", &net.TCPAddr{
 		IP:   net.IPv4(0, 0, 0, 0),
 		Port: 4000,
 	})
 
 	if err != nil {
-		fmt.Println(err)
-		return server{}, err
+		log.Println(err)
+		return Server{}, err
 	}
 
 	rand.Seed(time.Now().Unix())
 	err = l.SetDeadline(time.Now().Add(time.Minute * 1))
 
 	if err != nil {
-		return server{}, err
+		return Server{}, err
 	}
 
-	return server{
+	return Server{
 		l, h, 0,
 	}, nil
 }
 
-func handleConnection(c net.Conn, s *server) {
+func handleConnection(c net.Conn, s *Server) {
 	fmt.Printf("Serving %s\n", c.RemoteAddr().String())
 
-	defer func(c net.Conn, s *server) {
+	defer func(c net.Conn, s *Server) {
 		s.totalConnectedClients--
 		err := c.Close()
 
 		if err != nil {
-			fmt.Println(err)
+			log.Println(err)
 		}
 	}(c, s)
 
@@ -78,13 +74,13 @@ func handleConnection(c net.Conn, s *server) {
 	}
 }
 
-func (s *server) Run() {
+func (s *Server) Run() {
 	s.listenSignals()
 
 	for {
 		c, err := s.listener.Accept()
 		if err != nil {
-			fmt.Println(err)
+			log.Println(err)
 			return
 		}
 
@@ -95,24 +91,24 @@ func (s *server) Run() {
 			err := c.Close()
 
 			if err != nil {
-				fmt.Println(err)
+				log.Println(err)
 			}
 		}
 	}
 }
 
-func (s *server) Shutdown() {
+func (s *Server) Shutdown() {
 	err := s.listener.Close()
 
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 }
 
-func (s server) listenSignals() {
+func (s Server) listenSignals() {
 	signalChannel := make(chan os.Signal, 2)
 	signal.Notify(signalChannel, os.Interrupt, syscall.SIGTERM)
-	go func(s server) {
+	go func(s Server) {
 		sig := <-signalChannel
 		switch sig {
 		case os.Interrupt:
@@ -123,21 +119,21 @@ func (s server) listenSignals() {
 	}(s)
 }
 
-func (s server) parseInput(c net.Conn) (string, error) {
+func (s Server) parseInput(c net.Conn) (string, error) {
 	netData, err := bufio.NewReader(c).ReadString('\n')
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return "", err
 	}
 
 	return strings.TrimSpace(netData), nil
 }
 
-func (s server) terminate(c net.Conn) {
+func (s Server) terminate(c net.Conn) {
 	err := c.Close()
 
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 
 	util.KillSystem()
