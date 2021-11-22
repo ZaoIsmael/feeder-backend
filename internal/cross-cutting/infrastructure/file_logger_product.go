@@ -1,7 +1,7 @@
 package infrastructure
 
 import (
-	"deporvillage-feeder-backend/pkg/domain"
+	"deporvillage-feeder-backend/internal/cross-cutting/domain"
 	"log"
 	"os"
 	"os/signal"

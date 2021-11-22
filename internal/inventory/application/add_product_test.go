@@ -1,10 +1,10 @@
 package application
 
 import (
+	domain2 "deporvillage-feeder-backend/internal/cross-cutting/domain"
+	pkg "deporvillage-feeder-backend/internal/cross-cutting/infrastructure"
 	"deporvillage-feeder-backend/internal/inventory/domain"
 	"deporvillage-feeder-backend/internal/inventory/infrastructure"
-	domain2 "deporvillage-feeder-backend/pkg/domain"
-	pkg "deporvillage-feeder-backend/pkg/infrastructure"
 	"errors"
 	"testing"
 )

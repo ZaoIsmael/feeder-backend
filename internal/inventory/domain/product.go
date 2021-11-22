@@ -1,6 +1,8 @@
 package domain
 
-import "deporvillage-feeder-backend/pkg/domain"
+import (
+	"deporvillage-feeder-backend/internal/cross-cutting/domain"
+)
 
 type Product struct {
 	Sku domain.SKU

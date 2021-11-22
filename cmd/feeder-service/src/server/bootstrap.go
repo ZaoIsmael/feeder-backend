@@ -2,6 +2,8 @@ package server
 
 import (
 	"deporvillage-feeder-backend/cmd/feeder-service/src/controller"
+	pkgDomain "deporvillage-feeder-backend/internal/cross-cutting/domain"
+	infrastructure2 "deporvillage-feeder-backend/internal/cross-cutting/infrastructure"
 	"deporvillage-feeder-backend/internal/inventory/application"
 	eventHandlerInventory "deporvillage-feeder-backend/internal/inventory/application/event-handlers"
 	"deporvillage-feeder-backend/internal/inventory/domain"
@@ -10,8 +12,6 @@ import (
 	eventHandlerReport "deporvillage-feeder-backend/internal/report/application/event-handlers"
 	domainReport "deporvillage-feeder-backend/internal/report/domain"
 	infraReport "deporvillage-feeder-backend/internal/report/infrastructure"
-	pkgDomain "deporvillage-feeder-backend/pkg/domain"
-	pkgInfra "deporvillage-feeder-backend/pkg/infrastructure"
 	"strconv"
 	"time"
 )
@@ -26,7 +26,7 @@ var filename = "tmp/" + strconv.FormatInt(time.Now().UTC().UnixNano(), 10) + ".l
 func Boostrap() (App, error) {
 	inventoryRepository := infrastructure.NewInventoryRepository(make(map[string]domain.Inventory))
 	reportRepository := infraReport.NewReportRepository(make(map[string]domainReport.Report))
-	loggerProduct, err := pkgInfra.NewFileLoggerProduct(filename)
+	loggerProduct, err := infrastructure2.NewFileLoggerProduct(filename)
 
 	if err != nil {
 		return App{}, err
@@ -39,7 +39,7 @@ func Boostrap() (App, error) {
 		eventHandlerInventory.CreateProductWasAddedEventHandler(loggerProduct),
 	}
 
-	eventBus := pkgInfra.InMemoryEventBus{Handlers: handlers}
+	eventBus := infrastructure2.InMemoryEventBus{Handlers: handlers}
 
 	addProductAS := application.CreateAddProductApplicationService(inventoryRepository, eventBus)
 	getReportAS := applicationReport.CreateGetApplicationService(reportRepository)

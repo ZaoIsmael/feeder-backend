@@ -1,7 +1,7 @@
 package domain
 
 import (
-	"deporvillage-feeder-backend/pkg/domain"
+	"deporvillage-feeder-backend/internal/cross-cutting/domain"
 )
 
 type Report struct {
