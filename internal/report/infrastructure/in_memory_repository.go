@@ -6,17 +6,17 @@ import (
 )
 
 type ReportRepository struct {
-	R map[string]domain.Report
+	r map[string]domain.Report
 }
 
-func NewReportRepository(r map[string]domain.Report) ReportRepository {
-	return ReportRepository{
-		R: r,
+func NewReportRepository(r map[string]domain.Report) *ReportRepository {
+	return &ReportRepository{
+		r: r,
 	}
 }
 
 func (r ReportRepository) Find(id domain.ReportId) (domain.Report, error) {
-	i, ok := r.R[id.Value]
+	i, ok := r.r[id.Value]
 
 	if ok {
 		return i, nil
@@ -26,5 +26,5 @@ func (r ReportRepository) Find(id domain.ReportId) (domain.Report, error) {
 }
 
 func (r *ReportRepository) Save(re domain.Report) {
-	r.R[re.Id.Value] = re
+	r.r[re.Id.Value] = re
 }

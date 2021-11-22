@@ -9,7 +9,7 @@ import (
 
 func setupProductWasDuplicated(rm map[string]domain.Report) (ProductWasDuplicatedApplicationService, infrastructure.ReportRepository) {
 	repository := infrastructure.NewReportRepository(rm)
-	return CreateProductWasDuplicatedApplicationService(&repository), repository
+	return CreateProductWasDuplicatedApplicationService(repository), *repository
 }
 
 func TestProductWasDuplicated(t *testing.T) {

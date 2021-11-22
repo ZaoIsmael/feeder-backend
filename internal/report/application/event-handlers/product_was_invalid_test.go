@@ -9,7 +9,7 @@ import (
 
 func setupProductWasInvalid(rm map[string]domain.Report) (ProductWasInvalidApplicationService, infrastructure.ReportRepository) {
 	repository := infrastructure.NewReportRepository(rm)
-	return CreateProductWasInvalidApplicationService(&repository), repository
+	return CreateProductWasInvalidApplicationService(repository), *repository
 }
 
 func TestProductWasInvalid(t *testing.T) {
