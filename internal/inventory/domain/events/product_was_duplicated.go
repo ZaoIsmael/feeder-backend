@@ -9,5 +9,5 @@ func (ed ProductWasDuplicated) EventName() string {
 }
 
 func ProductWasDuplicatedName() string  {
-	return "product_was_duplicated"
+	return "event.feeder.product_was_duplicated"
 }

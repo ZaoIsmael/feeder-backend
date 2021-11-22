@@ -7,5 +7,5 @@ func (ed ProductWasInvalid) EventName() string {
 }
 
 func ProductWasInvalidName() string  {
-	return "product_was_invalid"
+	return "event.feeder.product_was_invalid"
 }

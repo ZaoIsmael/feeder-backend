@@ -8,6 +8,6 @@ func (ed ProductWasAdded) EventName() string {
 	return ProductWasAddedName()
 }
 
-func ProductWasAddedName() string  {
-	return "product_was_added"
+func ProductWasAddedName() string {
+	return "event.feeder.product_was_added"
 }
