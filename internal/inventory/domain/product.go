@@ -1,11 +1,13 @@
 package domain
 
+import "deporvillage-feeder-backend/pkg/domain"
+
 type Product struct {
-	Sku SKU
+	Sku domain.SKU
 }
 
 func CreateProduct(sku string) (Product, error) {
-	SKU, err := CreateSKU(sku)
+	SKU, err := domain.CreateSKU(sku)
 
 	if err != nil {
 		return Product{}, err
