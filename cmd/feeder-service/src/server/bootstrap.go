@@ -1,6 +1,7 @@
 package server
 
 import (
+	"deporvillage-feeder-backend/cmd/feeder-service/src/controller"
 	"deporvillage-feeder-backend/internal/inventory/application"
 	eventHandlerInventory "deporvillage-feeder-backend/internal/inventory/application/event-handlers"
 	"deporvillage-feeder-backend/internal/inventory/domain"
@@ -16,8 +17,8 @@ import (
 )
 
 type App struct {
-	Report  applicationReport.GetApplicationService
-	Service application.AddProductApplicationService
+	Report  controller.ReportController
+	Product controller.ProductController
 }
 
 var filename = "tmp/" + strconv.FormatInt(time.Now().UTC().UnixNano(), 10) + ".log"
@@ -44,7 +45,7 @@ func Boostrap() (App, error) {
 	getReportAS := applicationReport.CreateGetApplicationService(reportRepository)
 
 	return App{
-		getReportAS,
-		addProductAS,
+		controller.CreateReportController(getReportAS),
+		controller.CreateProductController(addProductAS),
 	}, nil
 }

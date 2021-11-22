@@ -2,8 +2,8 @@ package server
 
 import (
 	"bufio"
+	"deporvillage-feeder-backend/cmd/feeder-service/src/controller"
 	"deporvillage-feeder-backend/cmd/feeder-service/src/util"
-	"deporvillage-feeder-backend/internal/inventory/application"
 	"fmt"
 	"math/rand"
 	"net"
@@ -16,7 +16,7 @@ import (
 
 type server struct {
 	listener              net.Listener
-	handler               application.AddProductApplicationService
+	handler               controller.Controller
 	totalConnectedClients int
 }
 
@@ -27,7 +27,7 @@ type Server interface {
 
 var limitConnectedClients = 5
 
-func CreateServer(h application.AddProductApplicationService) (server, error) {
+func CreateServer(h controller.Controller) (server, error) {
 	l, err := net.ListenTCP("tcp4", &net.TCPAddr{
 		IP:   net.IPv4(0, 0, 0, 0),
 		Port: 4000,
@@ -72,12 +72,8 @@ func handleConnection(c net.Conn, s *server) {
 		if input == "terminate" {
 			s.terminate(c)
 			break
-		}
-
-		err = s.handler.Execute(input)
-
-		if err != nil {
-			fmt.Println(err)
+		} else {
+			s.handler.Run(input)
 		}
 	}
 }
