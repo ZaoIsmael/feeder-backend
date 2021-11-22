@@ -9,9 +9,9 @@ type GetApplicationService struct {
 }
 
 type Response struct {
-	total      int
-	duplicated int
-	invalids   int
+	Uniques     int
+	Duplicated int
+	Invalids   int
 }
 
 func CreateGetApplicationService(repository domain.ReportRepository) GetApplicationService {
