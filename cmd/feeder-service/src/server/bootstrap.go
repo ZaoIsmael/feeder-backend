@@ -26,7 +26,7 @@ var filenameLog = "tmp/" + strconv.FormatInt(time.Now().UTC().UnixNano(), 10) + 
 func Boostrap() (App, error) {
 	inventoryRepository := infrastructure.NewInventoryRepository(make(map[string]domain.Inventory))
 	reportRepository := infraReport.NewReportRepository(make(map[string]domainReport.Report))
-	loggerProduct, err := infrastructure2.NewFileRegisterProduct(filenameLog)
+	register, err := infrastructure.NewFileRegisterProduct(filenameLog)
 
 	if err != nil {
 		return App{}, err
@@ -36,7 +36,7 @@ func Boostrap() (App, error) {
 		eventHandlerReport.CreateProductWasAddedApplicationService(reportRepository),
 		eventHandlerReport.CreateProductWasInvalidApplicationService(reportRepository),
 		eventHandlerReport.CreateProductWasDuplicatedApplicationService(reportRepository),
-		eventHandlerInventory.CreateProductWasAddedEventHandler(loggerProduct),
+		eventHandlerInventory.CreateProductWasAddedEventHandler(register),
 	}
 
 	eventBus := infrastructure2.InMemoryEventBus{Handlers: handlers}
