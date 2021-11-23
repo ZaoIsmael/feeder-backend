@@ -86,3 +86,34 @@ Directory tmp is used to store the log files.
 │           └── in_memory_repository.go
 └── tmp
 ```
+
+## Installation
+
+The project only has standard libraries, so we can run it with:
+
+**Note: if you don't have the tmp directory, create it!**
+
+```shell
+go run cmd/feeder-service/main.go
+```
+
+It is also possible to do it with docker:
+
+```shell
+docker build -t feeder-service .
+docker run -v "$(pwd)"/tmp:/app/tmp -p 4000:4000 feeder-service
+```
+Once the application is up, you can connect to it via port `4000` for example, you can use `nc`:
+
+```shell
+nc localhost 4000
+```
+
+To launch the tests:
+
+```shell
+go test -v ./...
+```
+
+
+
