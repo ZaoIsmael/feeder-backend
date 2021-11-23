@@ -91,7 +91,7 @@ Directory tmp is used to store the log files.
 
 The project only has standard libraries, so we can run it with:
 
-**Note: if you don't have the tmp directory, create it!**
+**Note: if you want to run it without docker and you don't have the tmp directory, create it!**
 
 ```shell
 go run cmd/feeder-service/main.go
