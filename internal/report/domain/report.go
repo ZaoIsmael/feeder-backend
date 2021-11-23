@@ -12,8 +12,18 @@ type Report struct {
 	counterProductDuplicated int
 }
 
-func CreateReport() Report {
-	return Report{Id: ReportId{"1"}, counterProduct: 0, counterProductInvalid: 0, counterProductDuplicated: 0}
+type ReportDTO struct {
+	Cp int
+	Ci int
+	Cd int
+}
+
+func CreateNewReport() Report {
+	return Report{Id: ReportId{"1"}, counterProduct: 0, counterProductInvalid: 0, counterProductDuplicated:0}
+}
+
+func CreateReport(r ReportDTO) Report {
+	return Report{Id: ReportId{"1"}, counterProduct: r.Cd, counterProductInvalid: r.Ci, counterProductDuplicated: r.Cd}
 }
 
 func (r *Report) IncrementProduct() {
