@@ -26,7 +26,7 @@ var filenameLog = "tmp/" + strconv.FormatInt(time.Now().UTC().UnixNano(), 10) + 
 func Boostrap() (App, error) {
 	inventoryRepository := infrastructure.NewInventoryRepository(make(map[string]domain.Inventory))
 	reportRepository := infraReport.NewReportRepository(make(map[string]domainReport.Report))
-	loggerProduct, err := infrastructure2.NewFileLoggerProduct(filenameLog)
+	loggerProduct, err := infrastructure2.NewFileRegisterProduct(filenameLog)
 
 	if err != nil {
 		return App{}, err

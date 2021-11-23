@@ -2,15 +2,16 @@ package event_handlers
 
 import (
 	"deporvillage-feeder-backend/internal/cross-cutting/domain"
+	domain2 "deporvillage-feeder-backend/internal/inventory/domain"
 	"deporvillage-feeder-backend/internal/inventory/domain/events"
 )
 
 type ProductWasAddedApplicationService struct {
-	loggerProduct domain.LoggerProduct
+	register domain2.RegisterProduct
 }
 
-func CreateProductWasAddedEventHandler(loggerProduct domain.LoggerProduct) ProductWasAddedApplicationService {
-	return ProductWasAddedApplicationService{loggerProduct}
+func CreateProductWasAddedEventHandler(register domain2.RegisterProduct) ProductWasAddedApplicationService {
+	return ProductWasAddedApplicationService{register}
 }
 
 func (as ProductWasAddedApplicationService) EventSubscriberName() string {
@@ -20,6 +21,6 @@ func (as ProductWasAddedApplicationService) EventSubscriberName() string {
 func (as ProductWasAddedApplicationService) Execute(e domain.EventDomain) {
 	switch event := e.(type) {
 	case events.ProductWasAdded:
-		as.loggerProduct.Record(event.ProductSKU)
+		as.register.Record(event.ProductSKU)
 	}
 }

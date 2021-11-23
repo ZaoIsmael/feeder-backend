@@ -8,14 +8,14 @@ import (
 	"syscall"
 )
 
-type FileLoggerProduct struct {
+type FileRegisterProduct struct {
 	f *os.File
 }
 
-func (fl FileLoggerProduct) listenSignals() {
+func (fl FileRegisterProduct) listenSignals() {
 	signalChannel := make(chan os.Signal, 2)
 	signal.Notify(signalChannel, os.Interrupt, syscall.SIGTERM)
-	go func(f FileLoggerProduct) {
+	go func(f FileRegisterProduct) {
 		sig := <-signalChannel
 		switch sig {
 		case os.Interrupt:
@@ -26,14 +26,14 @@ func (fl FileLoggerProduct) listenSignals() {
 	}(fl)
 }
 
-func NewFileLoggerProduct(fileName string) (*FileLoggerProduct, error) {
+func NewFileRegisterProduct(fileName string) (*FileRegisterProduct, error) {
 	f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 
 	if err != nil {
-		return &FileLoggerProduct{}, err
+		return &FileRegisterProduct{}, err
 	}
 
-	fl := &FileLoggerProduct{
+	fl := &FileRegisterProduct{
 		f,
 	}
 
@@ -42,7 +42,7 @@ func NewFileLoggerProduct(fileName string) (*FileLoggerProduct, error) {
 	return fl, nil
 }
 
-func (fl FileLoggerProduct) Record(sku domain.SKU) {
+func (fl FileRegisterProduct) Record(sku domain.SKU) {
 	defer fl.flush()
 	_, err := fl.f.WriteString(sku.Value() + "\n")
 
@@ -51,14 +51,14 @@ func (fl FileLoggerProduct) Record(sku domain.SKU) {
 	}
 }
 
-func (fl FileLoggerProduct) close() {
+func (fl FileRegisterProduct) close() {
 	err := fl.f.Close()
 	if err != nil {
 		log.Println(err)
 	}
 }
 
-func (fl FileLoggerProduct) flush() {
+func (fl FileRegisterProduct) flush() {
 	err := fl.f.Sync()
 	if err != nil {
 		log.Println(err)
