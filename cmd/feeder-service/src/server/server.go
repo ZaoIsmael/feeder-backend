@@ -21,7 +21,7 @@ type Server struct {
 	totalConnectedClients int
 }
 
-var limitConnectedClients = 5
+const limitConnectedClients = 5
 
 func CreateServer(h controller.Controller) (Server, error) {
 	l, err := net.ListenTCP("tcp4", &net.TCPAddr{
@@ -30,7 +30,6 @@ func CreateServer(h controller.Controller) (Server, error) {
 	})
 
 	if err != nil {
-		log.Println(err)
 		return Server{}, err
 	}
 
@@ -62,6 +61,7 @@ func handleConnection(c net.Conn, s *Server) {
 		input, err := s.parseInput(c)
 
 		if err != nil {
+			log.Println(err)
 			return
 		}
 
@@ -75,6 +75,7 @@ func handleConnection(c net.Conn, s *Server) {
 }
 
 func (s *Server) Run() {
+	fmt.Printf("Server run on %s\n", s.listener.Addr().String())
 	s.listenSignals()
 
 	for {
@@ -122,7 +123,6 @@ func (s Server) listenSignals() {
 func (s Server) parseInput(c net.Conn) (string, error) {
 	netData, err := bufio.NewReader(c).ReadString('\n')
 	if err != nil {
-		log.Println(err)
 		return "", err
 	}
 

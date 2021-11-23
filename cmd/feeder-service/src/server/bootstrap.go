@@ -21,12 +21,12 @@ type App struct {
 	Product controller.ProductController
 }
 
-var filename = "tmp/" + strconv.FormatInt(time.Now().UTC().UnixNano(), 10) + ".log"
+var filenameLog = "tmp/" + strconv.FormatInt(time.Now().UTC().UnixNano(), 10) + ".log"
 
 func Boostrap() (App, error) {
 	inventoryRepository := infrastructure.NewInventoryRepository(make(map[string]domain.Inventory))
 	reportRepository := infraReport.NewReportRepository(make(map[string]domainReport.Report))
-	loggerProduct, err := infrastructure2.NewFileLoggerProduct(filename)
+	loggerProduct, err := infrastructure2.NewFileLoggerProduct(filenameLog)
 
 	if err != nil {
 		return App{}, err
