@@ -3,7 +3,6 @@ package controller
 import (
 	"deporvillage-feeder-backend/internal/report/application"
 	"fmt"
-	"log"
 )
 
 type ReportController struct {
@@ -18,7 +17,7 @@ func (c ReportController) Run(_ string) {
 	report, err := c.service.Execute()
 
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 	}
 
 	fmt.Printf("Received %d unique product skus, %d duplicates and %d discarded values.\n",
