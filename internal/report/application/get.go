@@ -18,16 +18,16 @@ func CreateGetApplicationService(repository domain.ReportRepository) GetApplicat
 	return GetApplicationService{repository}
 }
 
-func (as GetApplicationService) Execute() (Response, error) {
+func (as GetApplicationService) Execute() Response {
 	report, err := as.repository.Find(domain.ReportId{Value: "1"})
 
 	if err != nil {
-		return Response{}, err
+		return Response{}
 	}
 
 	return Response{
 		report.GetCounterProduct(),
 		report.GetCounterProductDuplicated(),
 		report.GetCounterProductInvalid(),
-	}, nil
+	}
 }

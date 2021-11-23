@@ -14,11 +14,7 @@ func CreateReportController(service application.GetApplicationService) ReportCon
 }
 
 func (c ReportController) Run(_ string) {
-	report, err := c.service.Execute()
-
-	if err != nil {
-		fmt.Println(err)
-	}
+	report := c.service.Execute()
 
 	fmt.Printf("Received %d unique product skus, %d duplicates and %d discarded values.\n",
 		report.Uniques,

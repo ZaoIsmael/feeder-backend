@@ -16,7 +16,7 @@ func TestGetWhenReportDontExist(t *testing.T) {
 	d := make(map[string]domain.Report)
 	as := setupTest(d)
 
-	r, _ := as.Execute()
+	r := as.Execute()
 
 	if r.Duplicated > 0 && r.Uniques > 0 && r.Invalids > 0 {
 		t.Errorf("error when running application servirce")
@@ -30,7 +30,7 @@ func TestGetReport(t *testing.T) {
 	d[re.Id.Value] = re
 	as := setupTest(d)
 
-	r, _ := as.Execute()
+	r := as.Execute()
 
 	if r.Duplicated != 1 && r.Uniques != 1 && r.Invalids != 1 {
 		t.Errorf("error when running application servirce")
