@@ -26,8 +26,8 @@ func (as GetApplicationService) Execute() (Response, error) {
 	}
 
 	return Response{
-		report.CountProducts,
-		report.CountProductsDuplicated,
-		report.CountProductsInvalid,
+		report.GetCounterProduct(),
+		report.GetCounterProductDuplicated(),
+		report.GetCounterProductInvalid(),
 	}, nil
 }

@@ -18,7 +18,7 @@ func (as ProductWasInvalidApplicationService) EventSubscriberName() string {
 	return events.ProductWasInvalidName()
 }
 
-func (as ProductWasInvalidApplicationService) Execute(e pkg.EventDomain) {
+func (as ProductWasInvalidApplicationService) Execute(_ pkg.EventDomain) {
 	report, err := as.repository.Find(domain.ReportId{Value: "1"})
 
 	if err != nil {

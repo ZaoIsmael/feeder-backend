@@ -5,7 +5,7 @@ import (
 )
 
 type Product struct {
-	Sku domain.SKU
+	sku domain.SKU
 }
 
 func CreateProduct(sku string) (Product, error) {
@@ -16,4 +16,8 @@ func CreateProduct(sku string) (Product, error) {
 	}
 
 	return Product{SKU}, nil
+}
+
+func (p Product) GetSKU() domain.SKU {
+	return p.sku
 }

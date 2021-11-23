@@ -21,7 +21,7 @@ func TestProductWasInvalid(t *testing.T) {
 
 	re, _ := r.Find(domain.ReportId{Value: "1"})
 
-	if re.CountProductsInvalid != 1 {
+	if re.GetCounterProductInvalid() != 1 {
 		t.Errorf("error when running application service")
 	}
 }

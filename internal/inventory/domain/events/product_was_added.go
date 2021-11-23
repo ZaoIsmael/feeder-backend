@@ -1,7 +1,9 @@
 package events
 
+import "deporvillage-feeder-backend/internal/cross-cutting/domain"
+
 type ProductWasAdded struct {
-	ProductSKU string
+	ProductSKU domain.SKU
 }
 
 func (ed ProductWasAdded) EventName() string {

@@ -30,7 +30,6 @@ func NewFileLoggerProduct(fileName string) (*FileLoggerProduct, error) {
 	f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 
 	if err != nil {
-		log.Println(err)
 		return &FileLoggerProduct{}, err
 	}
 
@@ -45,7 +44,7 @@ func NewFileLoggerProduct(fileName string) (*FileLoggerProduct, error) {
 
 func (fl FileLoggerProduct) Record(sku domain.SKU) {
 	defer fl.flush()
-	_, err := fl.f.WriteString(sku.Value + "\n")
+	_, err := fl.f.WriteString(sku.Value() + "\n")
 
 	if err != nil {
 		log.Println(err)

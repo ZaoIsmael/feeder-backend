@@ -42,15 +42,9 @@ func TestAddProductDuplicated(t *testing.T) {
 	// arrange
 	sku := "LPOS-3241"
 	im := make(map[string]domain.Inventory)
-	id := domain.InventoryId{Value: "1"}
-	i := domain.Inventory{
-		Id: id,
-		Products: map[string]domain.Product{
-			sku: {Sku: domain2.SKU{Value: sku}},
-		},
-	}
+	i, _ := domain.CreateInventory([]string{sku})
 
-	im[id.Value] = i
+	im[i.Id().Value] = i
 
 	as := setupTest(im)
 	err := as.Execute(sku)

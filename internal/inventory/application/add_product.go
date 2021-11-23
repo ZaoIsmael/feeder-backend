@@ -18,7 +18,11 @@ func (as AddProductApplicationService) Execute(sku string) error {
 	inventory, err := as.repository.Find(domain.InventoryId{Value: "1"})
 
 	if err != nil {
-		inventory = domain.CreateInventory()
+		inventory, err = domain.CreateInventory([]string{})
+	}
+
+	if err != nil {
+		return err
 	}
 
 	de := inventory.AddProduct(sku)

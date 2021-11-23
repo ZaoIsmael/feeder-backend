@@ -5,11 +5,11 @@ import (
 )
 
 func TestCreateInventory(t *testing.T) {
-	CreateInventory()
+	_, _ = CreateInventory([]string{})
 }
 
 func TestInventory_AddProduct(t *testing.T) {
-	inventory := CreateInventory()
+	inventory, _ := CreateInventory([]string{})
 	err := inventory.AddProduct("LPOS-3241")
 
 	if err != nil {

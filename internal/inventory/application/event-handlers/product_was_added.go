@@ -20,6 +20,6 @@ func (as ProductWasAddedApplicationService) EventSubscriberName() string {
 func (as ProductWasAddedApplicationService) Execute(e domain.EventDomain) {
 	switch event := e.(type) {
 	case events.ProductWasAdded:
-		as.loggerProduct.Record(domain.SKU{Value: event.ProductSKU})
+		as.loggerProduct.Record(event.ProductSKU)
 	}
 }

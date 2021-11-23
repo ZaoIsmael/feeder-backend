@@ -18,7 +18,7 @@ func (as ProductWasDuplicatedApplicationService) EventSubscriberName() string {
 	return events.ProductWasDuplicatedName()
 }
 
-func (as ProductWasDuplicatedApplicationService) Execute(e pkg.EventDomain) {
+func (as ProductWasDuplicatedApplicationService) Execute(_ pkg.EventDomain) {
 	report, err := as.repository.Find(domain.ReportId{Value: "1"})
 
 	if err != nil {

@@ -26,5 +26,5 @@ func (r InventoryRepository) Find(id domain.InventoryId) (domain.Inventory, erro
 }
 
 func (r *InventoryRepository) Save(is domain.Inventory) {
-	r.i[is.Id.Value] = is
+	r.i[is.Id().Value] = is
 }

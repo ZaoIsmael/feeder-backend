@@ -8,14 +8,33 @@ import (
 
 type Inventory struct {
 	domain.AggregateRoot
-	Id       InventoryId
-	Products map[string]Product
+	id       InventoryId
+	products Products
 }
+
+type Products map[string]Product
+type Skus []string
 
 var ProductDuplicatedError = errors.New("the product with SKU is registered")
 
-func CreateInventory() Inventory {
-	return Inventory{Id: InventoryId{"1"}, Products: make(map[string]Product)}
+func CreateInventory(sl Skus) (Inventory, error) {
+	lp := make(map[string]Product)
+
+	for _, s := range sl {
+		p, err := CreateProduct(s)
+
+		if err != nil {
+			return Inventory{}, err
+		}
+
+		lp[p.sku.Value()] = p
+	}
+
+	return Inventory{id: InventoryId{"1"}, products: lp}, nil
+}
+
+func (i Inventory) Id() InventoryId {
+	return i.id
 }
 
 func (i *Inventory) AddProduct(sku string) error {
@@ -29,20 +48,20 @@ func (i *Inventory) AddProduct(sku string) error {
 		return err
 	}
 
-	_, ok := i.Products[p.Sku.Value]
+	_, ok := i.products[p.sku.Value()]
 
 	if ok {
 		i.RegisterEvent(
-			events.ProductWasDuplicated{ProductSKU: p.Sku.Value},
+			events.ProductWasDuplicated{ProductSKU: p.sku},
 		)
 
 		return ProductDuplicatedError
 	}
 
-	i.Products[p.Sku.Value] = p
+	i.products[p.sku.Value()] = p
 
 	i.RegisterEvent(
-		events.ProductWasAdded{ProductSKU: p.Sku.Value},
+		events.ProductWasAdded{ProductSKU: p.sku},
 	)
 
 	return nil
