@@ -15,7 +15,7 @@ This repository is organized with the [Standard Go Project Layout](https://githu
 application, server, and the bootstrapping of this one.
 
 In the `internal` directory, we have everything related to our domain. This directory is organized by a module for
-each `aggregate` and also cross-cutting. each module is organized in the same way; domain, application, and infrastructure.
+each `aggregate` and also has cross-cutting. each module is organized in the same way; domain, application, and infrastructure.
 
 Directory tmp is used to store the log files.
 
@@ -91,7 +91,7 @@ Directory tmp is used to store the log files.
 
 The project only has standard libraries, so we can run it with:
 
-**Note: if you want to run it without docker and you don't have the tmp directory, create it!**
+**Note: if you want to run it without docker, and you don't have the tmp directory, create it!**
 
 ```shell
 go run cmd/feeder-service/main.go
