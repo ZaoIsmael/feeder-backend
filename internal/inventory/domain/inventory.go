@@ -17,20 +17,8 @@ type Skus []string
 
 var ProductDuplicatedError = errors.New("the product with SKU is registered")
 
-func CreateInventory(sl Skus) (Inventory, error) {
-	lp := make(map[string]Product)
-
-	for _, s := range sl {
-		p, err := CreateProduct(s)
-
-		if err != nil {
-			return Inventory{}, err
-		}
-
-		lp[p.sku.Value()] = p
-	}
-
-	return Inventory{id: InventoryId{"1"}, products: lp}, nil
+func CreateInventory() Inventory {
+	return Inventory{id: InventoryId{"1"}, products: map[string]Product{}}
 }
 
 func (i Inventory) Id() InventoryId {
