@@ -15,7 +15,7 @@ func setupProductWasAdded(rm map[string]domain.Report) (ProductWasAddedApplicati
 
 func TestProductWasAdded(t *testing.T) {
 	// arrange
-	rm := make(map[string]domain.Report)
+	rm := map[string]domain.Report{}
 	as, r := setupProductWasAdded(rm)
 
 	sku, _ := domain2.CreateSKU("ABCD-1234")

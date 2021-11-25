@@ -13,7 +13,7 @@ func setupTest(d map[string]domain.Report) GetApplicationService {
 
 func TestGetWhenReportDontExist(t *testing.T) {
 	// arrange
-	d := make(map[string]domain.Report)
+	d := map[string]domain.Report{}
 	as := setupTest(d)
 
 	r := as.Execute()
@@ -25,9 +25,15 @@ func TestGetWhenReportDontExist(t *testing.T) {
 
 func TestGetReport(t *testing.T) {
 	// arrange
-	d := make(map[string]domain.Report)
-	re := domain.CreateReport(domain.ReportDTO{Cp: 1, Ci: 1, Cd: 1})
-	d[re.Id.Value] = re
+	d := map[string]domain.Report{}
+	re := domain.ReportDTO{
+		Id:                       "1",
+		CounterProduct:           1,
+		CounterProductInvalid:    1,
+		CounterProductDuplicated: 1,
+	}.ToDomain()
+	d[re.Id().Value] = re
+
 	as := setupTest(d)
 
 	r := as.Execute()

@@ -26,5 +26,5 @@ func (r ReportRepository) Find(id domain.ReportId) (domain.Report, error) {
 }
 
 func (r *ReportRepository) Save(re domain.Report) {
-	r.r[re.Id.Value] = re
+	r.r[re.Id().Value] = re
 }

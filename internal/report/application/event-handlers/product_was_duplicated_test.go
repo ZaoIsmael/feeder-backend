@@ -15,7 +15,7 @@ func setupProductWasDuplicated(rm map[string]domain.Report) (ProductWasDuplicate
 
 func TestProductWasDuplicated(t *testing.T) {
 	// arrange
-	rm := make(map[string]domain.Report)
+	rm := map[string]domain.Report{}
 	as, r := setupProductWasDuplicated(rm)
 	sku, _ := domain2.CreateSKU("ABCD-1234")
 

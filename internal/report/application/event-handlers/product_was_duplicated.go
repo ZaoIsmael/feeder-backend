@@ -22,7 +22,7 @@ func (as ProductWasDuplicatedApplicationService) Execute(_ pkg.EventDomain) {
 	report, err := as.repository.Find(domain.ReportId{Value: "1"})
 
 	if err != nil {
-		report = domain.CreateNewReport()
+		report = domain.CreateReport()
 	}
 
 	report.IncrementProductDuplicated()

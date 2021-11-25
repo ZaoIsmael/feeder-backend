@@ -14,7 +14,7 @@ func setupProductWasInvalid(rm map[string]domain.Report) (ProductWasInvalidAppli
 
 func TestProductWasInvalid(t *testing.T) {
 	// arrange
-	rm := make(map[string]domain.Report)
+	rm := map[string]domain.Report{}
 	as, r := setupProductWasInvalid(rm)
 
 	as.Execute(events.ProductWasInvalid{})

@@ -8,7 +8,7 @@ type GetApplicationService struct {
 	repository domain.ReportRepository
 }
 
-type Response struct {
+type Report struct {
 	Uniques    int
 	Duplicated int
 	Invalids   int
@@ -18,14 +18,14 @@ func CreateGetApplicationService(repository domain.ReportRepository) GetApplicat
 	return GetApplicationService{repository}
 }
 
-func (as GetApplicationService) Execute() Response {
+func (as GetApplicationService) Execute() Report {
 	report, err := as.repository.Find(domain.ReportId{Value: "1"})
 
 	if err != nil {
-		return Response{}
+		return Report{}
 	}
 
-	return Response{
+	return Report{
 		report.GetCounterProduct(),
 		report.GetCounterProductDuplicated(),
 		report.GetCounterProductInvalid(),

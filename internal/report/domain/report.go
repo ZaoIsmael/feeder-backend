@@ -6,24 +6,16 @@ import (
 
 type Report struct {
 	domain.AggregateRoot
-	Id                       ReportId
+	id                       ReportId
 	counterProduct           int
 	counterProductInvalid    int
 	counterProductDuplicated int
 }
 
-type ReportDTO struct {
-	Cp int
-	Ci int
-	Cd int
-}
-
-func CreateNewReport() Report {
-	return Report{Id: ReportId{"1"}, counterProduct: 0, counterProductInvalid: 0, counterProductDuplicated:0}
-}
-
-func CreateReport(r ReportDTO) Report {
-	return Report{Id: ReportId{"1"}, counterProduct: r.Cd, counterProductInvalid: r.Ci, counterProductDuplicated: r.Cd}
+func CreateReport() Report {
+	return Report{
+		id: ReportId{"1"},
+	}
 }
 
 func (r *Report) IncrementProduct() {
@@ -36,6 +28,10 @@ func (r *Report) IncrementProductInvalid() {
 
 func (r *Report) IncrementProductDuplicated() {
 	r.counterProductDuplicated++
+}
+
+func (r Report) Id() ReportId {
+	return r.id
 }
 
 func (r Report) GetCounterProduct() int {
