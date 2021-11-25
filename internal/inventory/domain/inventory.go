@@ -6,14 +6,13 @@ import (
 	"errors"
 )
 
+type Products map[string]Product
+
 type Inventory struct {
 	domain.AggregateRoot
 	id       InventoryId
 	products Products
 }
-
-type Products map[string]Product
-type Skus []string
 
 var ProductDuplicatedError = errors.New("the product with SKU is registered")
 
