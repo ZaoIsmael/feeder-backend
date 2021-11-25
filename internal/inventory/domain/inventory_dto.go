@@ -8,7 +8,7 @@ type InventoryDTO struct {
 }
 
 func (i InventoryDTO) ToDomain() (Inventory, error) {
-	pd := make(map[string]Product)
+	pd := map[string]Product{}
 
 	for _, s := range i.Products {
 		sku, err := domain.CreateSKU(s)

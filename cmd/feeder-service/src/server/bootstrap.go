@@ -24,8 +24,8 @@ type App struct {
 var filenameLog = "tmp/" + strconv.FormatInt(time.Now().UTC().UnixNano(), 10) + ".log"
 
 func Boostrap() (App, error) {
-	inventoryRepository := infrastructure.NewInventoryRepository(make(map[string]domain.Inventory))
-	reportRepository := infraReport.NewReportRepository(make(map[string]domainReport.Report))
+	inventoryRepository := infrastructure.NewInventoryRepository(map[string]domain.Inventory{})
+	reportRepository := infraReport.NewReportRepository(map[string]domainReport.Report{})
 	register, err := infrastructure.NewFileRegisterProduct(filenameLog)
 
 	if err != nil {

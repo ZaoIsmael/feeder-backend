@@ -14,7 +14,7 @@ func setupProductWasAdded(d map[string]struct{}) (ProductWasAddedApplicationServ
 
 func TestProductWasAdded(t *testing.T) {
 	// arrange
-	rm := make(map[string]struct{})
+	rm := map[string]struct{}{}
 	as, r := setupProductWasAdded(rm)
 
 	sku, _ := domain.CreateSKU("ABCD-1234")
